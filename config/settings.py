@@ -132,5 +132,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR / "media")
 # Define the auth user model to our custom user model
 AUTH_USER_MODEL = "accounts.AppUser"
 
+LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGOUT_REDIRECT_URL = reverse_lazy("login")
