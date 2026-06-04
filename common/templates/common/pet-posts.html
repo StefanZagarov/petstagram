@@ -1,23 +1,27 @@
+{% load static %}
+{% load custom_filters %}
 {% for photo in all_photos %}
   <div class="card">
     <!-- Start User Details and Image Location -->
     <div class="top">
       <div class="userDetails">
         <!-- Link to User Profile Page -->
-        <a href="#">
+        <a href="{% url 'profile-details' photo.user.pk %}">
           <div class="profilepic">
             <div class="profile_img">
-              <div class="image">
-                <img src="/static/images/person.png" alt="img8" />
-              </div>
+              {% if photo.user.profile.profile_picture %}
+                <img src="{{ photo.user.profile.profile_picture }}" alt="">
+              {% else %}
+                <img src="{% static 'images/person.png' %}" alt="">
+              {% endif %}
             </div>
           </div>
         </a>
         <h3>
           <!-- Link to User Profile Page -->
-          <a href="#">
+          <a href="{% url 'profile-details' photo.user.pk %}">
             <!-- if user has first name and last name -->
-            Diyan Kalaydzhiev
+            {{ photo.user.profile.get_profile_name }}
             <!-- else -->
             <!-- show user username -->
           </a>
@@ -41,7 +45,7 @@
           <span class="heart">
             <a href="{% url 'like' photo.id %}">
               <!-- if user has liked the photo -->
-              {% if photo.like_set.all %}
+              {% if photo|is_liked_by:request.user %}
                 <i class="fa-solid fa-heart" style="color: #ed4040"></i>
                 <!-- else -->
               {% else %}
@@ -59,22 +63,16 @@
       </div>
       <!-- End Like and Share Buttons -->
       <!-- Number of Likes per Photo -->
-      <p class="likes">203 likes</p>
+      <p class="likes">{{ photo.like_set.count }} likes</p>
       <!-- Start Tagged Pets -->
       {% for pet in photo.tagged_pets.all %}
         <!-- Link to First Tagged Pet Details Page-->
-        <a href="{% url 'pet-details' "username" pet.slug %}">
+        <a href="{% url 'pet-details' pet.user.profile.get_profile_name|slugify pet.slug %}">
           <p class="message">
             <b>{{ pet.name }}</b>
           </p>
         </a>
       {% endfor %}
-      <!-- Link to Second Tagged Pet Details Page-->
-      <a href="#">
-        <p class="message">
-          <b>Some other fish</b>
-        </p>
-      </a>
       <!-- End Tagged Pets -->
       <!-- Link to Photo Details Page -->
       <a href="{% url 'photo-details' photo.pk %}">
@@ -91,14 +89,23 @@
                   <div class="profile_img">
                     <div class="image">
                       <!-- User Profile Image -->
-                      <img src="/static/images/person.png" alt="img8">
+                      {% if comment.user.profile.profile_picture %}
+                        <img src="{{ comment.user.profile.profile_picture }}" alt="">
+                      {% else %}
+                        <img src="{% static 'images/person.png' %}" alt="">
+                      {% endif %}
                     </div>
                   </div>
                 </div>
                 <p>
                   <!-- Link to User Profile Details Page-->
                   <!-- User First and/or Last Name or username-->
-                  <a href="">Steven Ivanov</a>
+                  <a href="{% url 'profile-details' comment.user.pk %}">
+                    <!-- if user has first name and last name -->
+                    {{ comment.user.profile.get_profile_name }}
+                    <!-- else -->
+                    <!-- show user username -->
+                  </a>
                   <!-- User Comment -->
                   {{ comment.text }}
                 </p>

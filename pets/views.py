@@ -15,8 +15,19 @@ class AddPetView(CreateView):
     form_class = PetForm
     # Specifies the template file that will be used to render the HTML content for this view
     template_name = "pets/pet-add-page.html"
+
+    def form_valid(self, form):
+        # Tip: This pattern is used constantly when we want to inject more data to a client-inserted form data. In this case, we want to attach the user to the pet form data/model that will be saved, so we do not save to database (commit=False) before we add the user
+        pet = form.save(commit=False)
+        pet.user = self.request.user
+        pet.save()
+        return super().form_valid(form)
+
     # Specifies the URL to redirect to after a successful form submission. In this case, it uses reverse_lazy to dynamically generate the URL for the 'profile-details' view with a specific primary key (pk=1). The use of reverse_lazy allows for resolving the URL at runtime
-    success_url = reverse_lazy("profile-details", kwargs={"pk": 1})
+    # Tip: Use method definition when you need data from the runtime. Use static class attribute when you don't:
+    # success_url = reverse_lazy("profile-details", kwargs={"pk": 1})
+    def get_success_url(self):
+        return reverse_lazy("profile-details", kwargs={"pk": self.request.user.pk})
 
 
 # CBV
@@ -56,8 +67,10 @@ class EditPetView(UpdateView):
             },
         )
 
+
 # In the DeletePetView class-based view, several methods are overridden to customize the behavior of the view.
 # Here's an explanation of each method:
+
 
 class DeletePetView(DeleteView):
     model = Pet

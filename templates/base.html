@@ -29,42 +29,51 @@
           </div>
           <div class="nav-links">
             <ul class="nav-group">
-              <li class="nav-item">
-                <!-- Link to Add Pet Page -->
-                <a href="{% url 'pet-add' %}">
-                  <i>Add Pet</i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <!-- Link to Add Photo Page -->
-                <a href="{% url 'photo-add' %}">
-                  <i>Add Photo</i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <!-- Link to Login Page -->
-                <a href="{% url 'login' %}">
-                  <i>Login</i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <!-- Link to Register Page -->
-                <a href="{% url 'register' %}">
-                  <i>Register</i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <!-- Link to Profile Page -->
-                <a href="#">
-                  <i>Profile</i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <!-- Lpg out -->
-                <a href="#">
-                  <i>Log out</i>
-                </a>
-              </li>
+              {% if request.user.is_authenticated %}
+                <p class="welcome">
+                  <i>Welcome, {{ request.user.email }}</i>
+                </p>
+                <li class="nav-item">
+                  <!-- Link to Add Pet Page -->
+                  <a href="{% url 'pet-add' %}">
+                    <i>Add Pet</i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <!-- Link to Add Photo Page -->
+                  <a href="{% url 'photo-add' %}">
+                    <i>Add Photo</i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <!-- Link to Profile Page -->
+                  <a href="{% url 'profile-details' request.user.pk %}">
+                    <i>Profile</i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <!-- Log out -->
+                  <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="button" type="submit">
+                      <i>Logout</i>
+                    </button>
+                  </form>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <!-- Link to Login Page -->
+                  <a href="{% url 'login' %}">
+                    <i>Login</i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <!-- Link to Register Page -->
+                  <a href="{% url 'register' %}">
+                    <i>Register</i>
+                  </a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>

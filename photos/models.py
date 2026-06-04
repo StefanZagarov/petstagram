@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -7,10 +8,14 @@ from photos.validators import validate_file_size
 
 
 class Photo(models.Model):
-    photo = models.ImageField(upload_to='images', validators=(validate_file_size,))
+    photo = models.ImageField(upload_to="images", validators=(validate_file_size,))
     description = models.TextField(
         max_length=300, validators=(MinLengthValidator(10),), blank=True, null=True
     )
     location = models.CharField(max_length=30, blank=True, null=True)
     tagged_pets = models.ManyToManyField(Pet, blank=True)
-    date_of_publication = models.DateField(auto_now=True)
+    date_of_publication = models.DateField(auto_now_add=True)
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ["-date_of_publication"]

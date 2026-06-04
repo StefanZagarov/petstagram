@@ -490,3 +490,17 @@ div.footer {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.button {
+  background: none;
+  background-color: white;
+  border: none;
+  font-size: 21px;
+  margin: 2.5px 0px 0px 8px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.welcome {
+  margin-right: 1rem;
+}

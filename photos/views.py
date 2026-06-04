@@ -8,7 +8,9 @@ from photos.models import Photo
 def photo_add(request):
     form = PhotoCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
+        photo = form.save(commit=False)
+        photo.user = request.user
+        photo.save()
         return redirect("home")
 
     context = {"form": form}
@@ -45,6 +47,6 @@ def edit(request, pk):
 
 def photo_delete(request, pk):
     photo = Photo.objects.get(pk=pk)
-    photo.delete
+    photo.delete()
 
     return redirect("home")
