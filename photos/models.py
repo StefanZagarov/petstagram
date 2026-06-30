@@ -4,6 +4,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from pets.models import Pet
+
+# Custom validator
 from photos.validators import validate_file_size
 
 
