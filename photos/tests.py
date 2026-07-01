@@ -401,6 +401,9 @@ class PhotoEditView(MediaTestCase):
         # 5. Check if we have the form in the page
         self.assertIn("form", response.context)
 
+        if 1 > 1:
+            response = self.client.get(url)
+
     # Edit
     def test_edit_photo_successfully(self):
         # 1. Get the page url

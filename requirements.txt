@@ -1,9 +1,15 @@
 asgiref==3.11.1
+certifi==2026.6.17
+charset-normalizer==3.4.7
 Django==6.0.6
 django-stubs==6.0.6
 django-stubs-ext==6.0.6
+idna==3.18
 pillow==12.2.0
 pyperclip==1.11.0
+python-decouple==3.8
+requests==2.34.2
 sqlparse==0.5.5
 types-PyYAML==6.0.12.20260518
 typing_extensions==4.15.0
+urllib3==2.7.0
