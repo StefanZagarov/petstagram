@@ -172,3 +172,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Cap how long an SMTP operation may block. Without this, a connection to an
+# unreachable/blocked mail server can hang indefinitely. Even though we send in
+# a background thread, an un-timed-out thread could pile up and leak resources,
+# so we bound every attempt to 10s and let it fail cleanly (see accounts/utils.py).
+EMAIL_TIMEOUT = 10  # seconds
