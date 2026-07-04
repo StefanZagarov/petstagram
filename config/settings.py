@@ -34,6 +34,13 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
+# Render sets RENDER_EXTERNAL_HOSTNAME to the app's public hostname at runtime.
+# On HTTPS, Django's CSRF check requires the origin to be explicitly trusted,
+# otherwise all POSTs (login, register, comment) fail with 403.
+RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default="")
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
+
 
 # Application definition
 
