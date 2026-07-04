@@ -36,7 +36,7 @@ EXPOSE 8000
 # EXPOSE 8000 — mostly documentation; it signals "this app talks on 8000."
 
 # 8. What runs when the container starts
-CMD gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}
+CMD python manage.py migrate --no-input && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}
 # CMD [...] — the start command. Two things to notice:
 # config.wsgi:application — that's your WSGI entrypoint (config/wsgi.py, the application object). This is why I checked your structure.
 # --bind 0.0.0.0:8000 — critical. Inside a container, 127.0.0.1 would mean "only reachable from inside the container itself" — you'd never be able to open it in your browser. 0.0.0.0 means "listen on all interfaces," which is what makes the port reachable from outside
