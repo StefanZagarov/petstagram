@@ -1,0 +1,22 @@
+# Docker Compose is a tool for defining and running Docker applications from a single YAML file (docker-compose.yml). Instead of typing long docker run commands with many flags, you declare your setup — which image to build, ports, environment, volumes — once in the file, then run docker compose up.
+
+# Where it's used: primarily local development and testing. Its real superpower is multi-container apps: if your app needs a web server plus a Postgres database plus Redis, Compose spins them all up together on a shared private network with one command, and they can talk to each other by service name. It's also used in CI pipelines and simple self-hosted deployments.
+
+# Where it's not used here: Render doesn't read docker-compose.yml — it builds straight from the Dockerfile. So this file is purely a local convenience for us, not part of the cloud deployment.
+
+# Full line we run locally to start the image:
+# docker run --rm -p 8055:8000 --env-file .env -v "$(pwd)/db.sqlite3:/app/db.sqlite3" petstagram
+services:
+  web:
+    # Equivalent cmd line: 
+    # docker build -t petstagram .
+    build: .
+    ports:
+      # -p 8055:8000
+      - "8055:8000"
+    env_file:
+      # --env-file .env
+      - ".env"
+    volumes:
+      # -v "$(pwd)/db.sqlite3:/app/db.sqlite3"
+      - ./db.sqlite3:/app/db.sqlite3

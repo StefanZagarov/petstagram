@@ -1,0 +1,19 @@
+# COPY . . copies everything from your project into the image. Without a filter, that includes stuff you absolutely don't want in there. A .dockerignore works exactly like .gitignore — it tells Docker "skip these when copying."
+
+# Why it matters (not just tidiness):
+# - .venv/ — your local virtual environment. It's built for your machine's paths; copying it in is useless and it's big (slow builds). The container builds its own deps via pip install.
+# - .env — security. This has your Gmail app password. You do not want secrets baked into an image. On Render you'll set these as environment variables instead.
+# - db.sqlite3 — your local dev database. Shouldn't travel into a production image.
+# - .git/, __pycache__/ — pointless bloat.
+
+.venv/
+.env
+db.sqlite3
+.git/
+.gitignore
+__pycache__/
+*.pyc
+media/
+test_media/
+tests/
+.claude/
