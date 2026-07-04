@@ -20,7 +20,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+# Favico fix for deployed version
+from django.views.generic.base import RedirectView
+
 urlpatterns = [
+    path(
+        "favicon.ico",
+        RedirectView.as_view(
+            url="/static/images/free-30-instagram-stories-icons23_122570.png"
+        ),
+    ),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("pets/", include("pets.urls")),
