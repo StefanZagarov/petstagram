@@ -14,7 +14,9 @@ types-PyYAML==6.0.12.20260518
 typing_extensions==4.15.0
 urllib3==2.7.0
 # --- Deployment / production ---
-gunicorn==23.0.0        # Production WSGI server that runs the app (replaces dev-only `runserver`)
-whitenoise==6.9.0       # Serves static files (CSS/JS/images) from the app itself in production
-psycopg[binary]==3.3.4  # PostgreSQL driver — lets Django talk to a Postgres database
-dj-database-url==2.3.0  # Turns a single DATABASE_URL string into Django's DATABASES dict
+gunicorn==23.0.0                  # Production WSGI server that runs the app (replaces dev-only `runserver`)
+whitenoise==6.9.0                 # Serves static files (CSS/JS/images) from the app itself in production
+psycopg[binary]==3.3.4            # PostgreSQL driver — lets Django talk to a Postgres database
+dj-database-url==2.3.0            # Turns a single DATABASE_URL string into Django's DATABASES dict
+cloudinary==1.44.0                # Cloudinary Python SDK (talks to the Cloudinary API)
+django-cloudinary-storage==0.3.0  # Django storage backend so ImageField uploads go to Cloudinary
