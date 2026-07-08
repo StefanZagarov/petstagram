@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-# Favico fix for deployed version
+# Favicon fix for deployed version
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
